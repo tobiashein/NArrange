@@ -35,7 +35,7 @@ namespace NArrange.Tests.Core
 		[Test]
 		public void WriteArrangedElementTest()
 		{
-			string outputDirectory = "Arranged";
+			string outputDirectory = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Arranged");
 			if (Directory.Exists(outputDirectory))
 			{
 				try

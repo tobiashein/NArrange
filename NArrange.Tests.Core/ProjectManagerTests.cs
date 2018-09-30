@@ -16,10 +16,9 @@ namespace NArrange.Tests.Core
 		/// Tests creating a new ProjectManager with a null configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void NullConfigurationTest()
 		{
-			ProjectManager projectManager = new ProjectManager(null);
+			Assert.Throws(typeof(ArgumentNullException), () => { ProjectManager projectManager = new ProjectManager(null); });
 		}
 
 		#endregion

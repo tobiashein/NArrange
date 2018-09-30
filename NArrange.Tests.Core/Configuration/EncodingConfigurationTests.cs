@@ -47,13 +47,12 @@ namespace NArrange.Tests.Core.Configuration
 		/// Tests GetEncoding() with an invalid codepage.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void GetEncodingInvalidFormatTest()
 		{
 			EncodingConfiguration config = new EncodingConfiguration();
 			config.CodePage = "SFDS";
 
-			config.GetEncoding();
+			Assert.Throws(typeof(FormatException), () => config.GetEncoding());
 		}
 
 		/// <summary>

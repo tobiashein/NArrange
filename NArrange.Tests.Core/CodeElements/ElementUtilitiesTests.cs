@@ -17,20 +17,18 @@ namespace NArrange.Tests.Core.CodeElements
 		/// Tests Format with a null element.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void FormatNullElementTest()
 		{
-			ElementUtilities.Format("$(Name)", null);
+			Assert.Throws(typeof(ArgumentNullException), () => ElementUtilities.Format("$(Name)", null));
 		}
 
 		/// <summary>
 		/// Tests Format with a null format string.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void FormatNullStringTest()
 		{
-			ElementUtilities.Format(null, new MethodElement());
+			Assert.Throws(typeof(ArgumentNullException), () => ElementUtilities.Format(null, new MethodElement()));
 		}
 
 		/// <summary>

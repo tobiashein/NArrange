@@ -60,14 +60,13 @@ namespace NArrange.Tests.CSharp
 		/// error is thrown.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException), ExpectedMessage = "Expected }: Line 2, Column 2")]
 		public void ExpectedBlockCloseTest()
 		{
 			StringReader reader = new StringReader(
 				"namespace SampleNamespace\r\n{");
 
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => parser.Parse(reader));
 		}
 
 		/// <summary>
@@ -75,7 +74,6 @@ namespace NArrange.Tests.CSharp
 		/// error is thrown.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException), ExpectedMessage = "Unexpected end of file. Expected ;: Line 7, Column 2")]
 		public void ExpectedFieldEndOfStatementTest()
 		{
 			StringReader reader = new StringReader(
@@ -88,7 +86,7 @@ namespace NArrange.Tests.CSharp
 				"}");
 
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => parser.Parse(reader));
 		}
 
 		/// <summary>
@@ -96,7 +94,6 @@ namespace NArrange.Tests.CSharp
 		/// error is thrown.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException), ExpectedMessage = "Expected an initial value: Line 5, Column 31")]
 		public void ExpectedFieldInitialValueTest()
 		{
 			StringReader reader = new StringReader(
@@ -109,7 +106,7 @@ namespace NArrange.Tests.CSharp
 				"}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -355,15 +352,13 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing an attribute where the closing is expected.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains, ExpectedMessage = "Expected ]")]
 		public void ParseAttributeCloseExpectedTest()
 		{
 			StringReader reader = new StringReader(
 				"[assembly: AssemblyDescription(\"SampleAssembly\")");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -575,48 +570,39 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a class with an empty parameter constraint list.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected a class or interface name")]
 		public void ParseClassEmptyParameterConstraintListTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> where T : {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class where a type implementation specification is expected.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected :")]
 		public void ParseClassExpectedTypeImplementsTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> where T {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class where a type parameter constraint is expected.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected type parameter constraint")]
 		public void ParseClassExpectedTypeParameterConstraintTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> when T : {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -653,25 +639,19 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a class with an invalid New type parameter constraint.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Invalid new constraint, use new()")]
 		public void ParseClassInvalidNewConstraintTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> where T : IDisposable, new {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class with a missing endregion tag.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Missing end region directive for 'Fields'")]
 		public void ParseClassMissingEndregionTest()
 		{
 			StringReader reader = new StringReader(
@@ -681,7 +661,7 @@ namespace NArrange.Tests.CSharp
 				"}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -712,16 +692,13 @@ namespace NArrange.Tests.CSharp
 		/// type parameter constraint.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "must be the last declared type parameter constraint")]
 		public void ParseClassNewConstraintOrderTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> where T : new(), IDisposable {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -778,93 +755,75 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a class with an unclosed type parameter constraint.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected >")]
 		public void ParseClassUnclosedTypeParameterConstraintTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> where T : IComparable<T {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class with an unclosed type parameter.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected >")]
 		public void ParseClassUnclosedTypeParameterTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class with an invalid element.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unhandled element")]
 		public void ParseClassUnhandledElementTest1()
 		{
 			StringReader reader = new StringReader(
 				"public class Test{test}");
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class with an invalid element.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unhandled element")]
 		public void ParseClassUnhandledElementTest2()
 		{
 			StringReader reader = new StringReader(
 				"public class Test{\r\ntest\r\npublic string Test;\r\n}");
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class with an invalid element.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unhandled element")]
 		public void ParseClassUnhandledElementTest3()
 		{
 			StringReader reader = new StringReader(
 				"public class Test{\r\n{\r\npublic string Test;\r\n}");
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing a class with an unknown type parameter constraint.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unknown type parameter")]
 		public void ParseClassUnknownTypeParameterTest()
 		{
 			StringReader reader = new StringReader(
 				"public class Test<T> where S : new() {}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -966,10 +925,6 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing an invalid condition directive.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage =
-				"Cannot arrange files with preprocessor directives containing attributes unassociated to an element")]
 		public void ParseConditionDirectiveAttributeUnhandledTest()
 		{
 			StringReader reader = new StringReader(
@@ -978,7 +933,7 @@ namespace NArrange.Tests.CSharp
 				"#endif");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -1082,9 +1037,6 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing an invalid condition directive.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected a condition expression")]
 		public void ParseConditionDirectiveMissingConditionTest()
 		{
 			StringReader reader = new StringReader(
@@ -1093,16 +1045,13 @@ namespace NArrange.Tests.CSharp
 				"#endif");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid condition directive.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected #endif")]
 		public void ParseConditionDirectiveNestedMissingEndTest()
 		{
 			StringReader reader = new StringReader(
@@ -1112,7 +1061,7 @@ namespace NArrange.Tests.CSharp
 				"#endif");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -1292,9 +1241,6 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing an invalid condition directive.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unhandled preprocessor")]
 		public void ParseConditionDirectiveUnhandledTest()
 		{
 			StringReader reader = new StringReader(
@@ -1303,7 +1249,7 @@ namespace NArrange.Tests.CSharp
 				"#endif");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -1351,15 +1297,13 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a constructor with constructor reference.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException), ExpectedMessage = "Expected (",
-			MatchType = MessageMatch.Contains)]
 		public void ParseConstructorReferenceExpectedParamsTest()
 		{
 			StringReader reader = new StringReader(
 				"public TestClass(int value, int max) : base");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -2391,16 +2335,13 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing an invalid type definition.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected {")]
 		public void ParseInvalidTypeDefinitionTest()
 		{
 			StringReader reader = new StringReader(
 				"public class struct Test{}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -2452,16 +2393,13 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a method without a closing brace.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unexpected end of file")]
 		public void ParseMethodBodyUnexpectedEndOfFileTest()
 		{
 			StringReader reader = new StringReader(
 				"private void DoSomething(){");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -3050,16 +2988,13 @@ namespace NArrange.Tests.CSharp
 		/// brace is expected.";
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected }")]
 		public void ParseNamespaceExpectedBlockEnd()
 		{
 			StringReader reader = new StringReader(
 				"namespace TestNamespace{");
 
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => parser.Parse(reader));
 		}
 
 		/// <summary>
@@ -3067,16 +3002,13 @@ namespace NArrange.Tests.CSharp
 		/// brace is expected.";
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected {")]
 		public void ParseNamespaceExpectedBlockStart()
 		{
 			StringReader reader = new StringReader(
 				"namespace TestNamespace");
 
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => parser.Parse(reader));
 		}
 
 		/// <summary>
@@ -3149,11 +3081,11 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a null stream.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ArgumentNullException))]
 		public void ParseNullStreamTest()
 		{
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(null);
+
+			Assert.Throws(typeof(ArgumentNullException), () => parser.Parse(null)); ;
 		}
 
 		/// <summary>
@@ -3527,9 +3459,6 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing unmatched nested regions that use comment directives.  
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Missing end region directive for 'Fields'")]
 		public void ParseRegionCommentDirectiveMismatchedTest()
 		{
 			StringReader reader = new StringReader(
@@ -3542,7 +3471,7 @@ namespace NArrange.Tests.CSharp
 				"}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -3652,15 +3581,12 @@ namespace NArrange.Tests.CSharp
 		/// Tests an unmatched end region directive.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unmatched end region directive")]
 		public void ParseRegionUnmatchedEndDirectiveTest()
 		{
 			StringReader reader = new StringReader("\t#endregion Fields");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -3737,9 +3663,6 @@ namespace NArrange.Tests.CSharp
 		/// Tests parsing a non-region preprocessor directive.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Cannot arrange files with preprocessor directives")]
 		public void ParseUnhandledPreprocessorTest()
 		{
 			StringReader reader = new StringReader(
@@ -3749,54 +3672,45 @@ namespace NArrange.Tests.CSharp
 				"}");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing an unrecognized keyword.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unhandled element text")]
 		public void ParseUnkownKeywordTest()
 		{
 			StringReader reader = new StringReader("blah");
 
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => parser.Parse(reader));
 		}
 
 		/// <summary>
 		/// Tests parsing an empty using statement.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected a namepace name")]
 		public void ParseUsingEmptyNamespaceTest()
 		{
 			StringReader reader = new StringReader(
 				"using ;");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
 		/// Tests parsing an empty using statement with a redefine.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected a type or namepace name")]
 		public void ParseUsingEmptyTypeOrNamespaceTest()
 		{
 			StringReader reader = new StringReader(
 				"using Test = ;");
 
 			CSharpParser parser = new CSharpParser();
-			ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => { ReadOnlyCollection<ICodeElement> elements = parser.Parse(reader); });
 		}
 
 		/// <summary>
@@ -3804,16 +3718,13 @@ namespace NArrange.Tests.CSharp
 		/// of statement is expected.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ParseException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected = or ;")]
 		public void ParseUsingExpectedStatementEnd()
 		{
 			StringReader reader = new StringReader(
 				"using System.Text");
 
 			CSharpParser parser = new CSharpParser();
-			parser.Parse(reader);
+			Assert.Throws(typeof(ParseException), () => parser.Parse(reader));
 		}
 
 		/// <summary>

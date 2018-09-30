@@ -182,10 +182,9 @@ namespace NArrange.Tests.CSharp
 		/// Test the construction with a null configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateWithNullTest()
 		{
-			CodeArranger arranger = new CodeArranger(null);
+			Assert.Throws(typeof(ArgumentNullException), () => { CodeArranger arranger = new CodeArranger(null); });
 		}
 
 		/// <summary>
@@ -1036,7 +1035,7 @@ namespace NArrange.Tests.CSharp
 		/// <summary>
 		/// Performs setup for this test fixture.
 		/// </summary>
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetup()
 		{
 			CSharpTestFile testFile = CSharpTestUtilities.GetClassMembersFile();

@@ -17,10 +17,9 @@ namespace NArrange.Tests.Core
 		/// Tests calling CreateElementArranger with a null configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateElementArrangerNullConfigurationTest()
 		{
-			ElementArrangerFactory.CreateElementArranger(null, new ElementConfiguration());
+			Assert.Throws(typeof(ArgumentNullException), () => ElementArrangerFactory.CreateElementArranger(null, new ElementConfiguration()));
 		}
 
 		#endregion
