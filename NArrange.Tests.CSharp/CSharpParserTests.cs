@@ -3815,6 +3815,50 @@ namespace NArrange.Tests.CSharp
 			}
 		}
 
+		[Test]
+		public void Parse_ShouldNotThrow_ForValueTupleAsReturnType()
+		{
+			// Arrange
+			var reader = new StringReader("public (string, int) Get() { return (string.Empty, 0); }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
+		[Test]
+		public void Parse_ShouldNotThrow_ForValueTupleAsMethodArgument()
+		{
+			// Arrange
+			var reader = new StringReader("public void Get((string, int) tuple) { }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
+		[Test]
+		public void Parse_ShouldNotThrow_ForValueTupleWithNamesAsReturnType()
+		{
+			// Arrange
+			var reader = new StringReader("public (string s, int i) Get() { return (string.Empty, 0); }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
+		[Test]
+		public void Parse_ShouldNotThrow_ForValueTupleWithNamesAsMethodArgument()
+		{
+			// Arrange
+			var reader = new StringReader("public void Get((string s, int i) tuple) { }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
 		/// <summary>
 		/// Gets the ClassMembers test class.
 		/// </summary>
