@@ -47,10 +47,11 @@ namespace NArrange.CSharp
 	using System.Globalization;
 	using System.IO;
 	using System.Text;
+	using System.Text.RegularExpressions;
 	using System.Threading;
 
 	/// <summary>
-	/// Visits a tree of code elements for writing C# code 
+	/// Visits a tree of code elements for writing C# code
 	/// </summary>
 	internal sealed class CSharpWriteVisitor : CodeWriteVisitor
 	{
@@ -78,6 +79,24 @@ namespace NArrange.CSharp
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Determines whether the property contains expression bodied accessors.
+		/// </summary>
+		/// <param name="propertyElement">The property element.</param>
+		/// <returns>
+		///   <c>true</c> if the property contains expression bodied accessors; otherwise, <c>false</c>.
+		/// </returns>
+		private bool HasExpressionBodiedAccessors(PropertyElement propertyElement)
+		{
+			if (propertyElement == null)
+				return false;
+
+			if (propertyElement.IsExpressionBodyProperty)
+				return false;
+
+			return Regex.IsMatch(propertyElement.BodyText, @"get\s*=>");
+		}
 
 		/// <summary>
 		/// Processes an attribute element.
@@ -496,6 +515,14 @@ namespace NArrange.CSharp
 				Writer.Write(CSharpSymbol.BeginAttribute);
 				Writer.Write(element.IndexParameter);
 				Writer.Write(CSharpSymbol.EndAttribute);
+			}
+
+			// C# 7 expression-bodied property accessors
+			if (HasExpressionBodiedAccessors(element))
+			{
+				Writer.WriteLine();
+				WriteBody(element);
+				return;
 			}
 
 			// only inline the property if it doesn't contain braces as that means

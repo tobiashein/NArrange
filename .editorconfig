@@ -1,0 +1,5 @@
+[*] 
+indent_style = tab
+# Code files 
+[*.{cs,csx,vb,vbx,xml}] 
+indent_size = 4 

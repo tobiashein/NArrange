@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{BD8B331C-6CB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F1B30F9B-36AE-493B-95E6-30D05244264C}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		changelog.txt = changelog.txt
 		readme.txt = readme.txt
 	EndProjectSection

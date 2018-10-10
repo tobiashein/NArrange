@@ -1694,6 +1694,108 @@ namespace NArrange.Tests.CSharp
 				"Using element was not written correctly.");
 		}
 
+		[Test]
+		public void WriteExpressionBodiedPropertyAccessors_GetSet_Test()
+		{
+			List<ICodeElement> codeElements = new List<ICodeElement>();
+
+			PropertyElement property = new PropertyElement();
+			property.Name = "SomeProperty";
+			property.Access = CodeAccess.Public;
+			property.Type = "string";
+			property.BodyText = "get => _name;\r\nset => _name = value;";
+			codeElements.Add(property);
+
+			StringWriter writer = new StringWriter();
+			CSharpWriter csharpWriter = new CSharpWriter();
+			csharpWriter.Write(codeElements.AsReadOnly(), writer);
+
+			string text = writer.ToString();
+			string expectedText =
+				"public string SomeProperty\r\n" +
+				"{\r\n" +
+				"    get => _name;\r\n" +
+				"    set => _name = value;\r\n" +
+				"}";
+			Assert.AreEqual(expectedText, text, "Property was not written correctly.");
+		}
+
+		[Test]
+		public void WriteExpressionBodiedPropertyAccessors_Get_Test()
+		{
+			List<ICodeElement> codeElements = new List<ICodeElement>();
+
+			PropertyElement property = new PropertyElement();
+			property.Name = "SomeProperty";
+			property.Access = CodeAccess.Public;
+			property.Type = "string";
+			property.BodyText = "get => _name;";
+			codeElements.Add(property);
+
+			StringWriter writer = new StringWriter();
+			CSharpWriter csharpWriter = new CSharpWriter();
+			csharpWriter.Write(codeElements.AsReadOnly(), writer);
+
+			string text = writer.ToString();
+			string expectedText =
+				"public string SomeProperty\r\n" +
+				"{\r\n" +
+				"    get => _name;\r\n" +
+				"}";
+			Assert.AreEqual(expectedText, text, "Property was not written correctly.");
+		}
+
+		[Test]
+		public void WriteExpressionBodiedPropertyAccessors_GetSetAction_Test()
+		{
+			List<ICodeElement> codeElements = new List<ICodeElement>();
+
+			PropertyElement property = new PropertyElement();
+			property.Name = "SomeProperty";
+			property.Access = CodeAccess.Public;
+			property.Type = "string";
+			property.BodyText = "get => _action ?? () => Console.WriteLine(\"property\");\r\nset => _action = value;";
+			codeElements.Add(property);
+
+			StringWriter writer = new StringWriter();
+			CSharpWriter csharpWriter = new CSharpWriter();
+			csharpWriter.Write(codeElements.AsReadOnly(), writer);
+
+			string text = writer.ToString();
+			string expectedText =
+				"public string SomeProperty\r\n" +
+				"{\r\n" +
+				"    get => _action ?? () => Console.WriteLine(\"property\");\r\n" +
+				"    set => _action = value;\r\n" +
+				"}";
+			Assert.AreEqual(expectedText, text, "Property was not written correctly.");
+		}
+
+		[Test]
+		public void WriteExpressionBodiedPropertyAccessors_GetAction_Test()
+		{
+			List<ICodeElement> codeElements = new List<ICodeElement>();
+
+			PropertyElement property = new PropertyElement();
+			property.Name = "SomeProperty";
+			property.Access = CodeAccess.Public;
+			property.Type = "string";
+			property.BodyText = "get => _action ?? () => Console.WriteLine(\"property\");";
+			codeElements.Add(property);
+
+			StringWriter writer = new StringWriter();
+			CSharpWriter csharpWriter = new CSharpWriter();
+			csharpWriter.Write(codeElements.AsReadOnly(), writer);
+
+			string text = writer.ToString();
+			string expectedText =
+				"public string SomeProperty\r\n" +
+				"{\r\n" +
+				"    get => _action ?? () => Console.WriteLine(\"property\");\r\n" +
+				"}";
+			Assert.AreEqual(expectedText, text, "Property was not written correctly.");
+		}
+
 		#endregion
 	}
 }
