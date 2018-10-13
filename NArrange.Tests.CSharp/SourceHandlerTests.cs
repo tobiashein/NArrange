@@ -33,10 +33,9 @@ namespace NArrange.Tests.CSharp
 		/// Tests creating with a null configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateWithNullConfigurationTest()
 		{
-			new SourceHandler(null);
+			Assert.Throws(typeof(ArgumentNullException), () => { new SourceHandler(null); });
 		}
 
 		#endregion

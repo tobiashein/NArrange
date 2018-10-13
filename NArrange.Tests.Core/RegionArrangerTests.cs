@@ -61,20 +61,18 @@ namespace NArrange.Tests.Core
 		/// Tests creating a RegionArranger with a null parent configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateNullParentConfigurationTest()
 		{
-			RegionArranger regionArranger = new RegionArranger(new RegionConfiguration(), null);
+			Assert.Throws(typeof(ArgumentNullException), () => { RegionArranger regionArranger = new RegionArranger(new RegionConfiguration(), null); });
 		}
 
 		/// <summary>
 		/// Tests creating a RegionArranger with a null region configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateNullRegionConfigurationTest()
 		{
-			RegionArranger regionArranger = new RegionArranger(null, new ElementConfiguration());
+			Assert.Throws(typeof(ArgumentNullException), () => { RegionArranger regionArranger = new RegionArranger(null, new ElementConfiguration()); });
 		}
 
 		#endregion

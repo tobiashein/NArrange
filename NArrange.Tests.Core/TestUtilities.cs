@@ -18,7 +18,7 @@ namespace NArrange.Tests.Core
 		{
 			get
 			{
-				DirectoryInfo testConfigDirectory = new DirectoryInfo("TestConfigurations");
+				DirectoryInfo testConfigDirectory = new DirectoryInfo(Path.Combine(TestContext.CurrentContext.WorkDirectory, "TestConfigurations"));
 				FileInfo[] testConfigFiles = testConfigDirectory.GetFiles("*.xml");
 
 				return testConfigFiles;

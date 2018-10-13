@@ -16,40 +16,36 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests parsing an empty string arg
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseEmptyArgTest()
 		{
-			CommandArguments.Parse("Input.cs", string.Empty);
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", string.Empty));
 		}
 
 		/// <summary>
 		/// Tests parsing an empty string[]
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseEmptyArrayTest()
 		{
-			CommandArguments.Parse(new string[] {});
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse(new string[] {}));
 		}
 
 		/// <summary>
 		/// Tests parsing an input file with an invalid backup flag
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputBackupInvalidTest()
 		{
-			CommandArguments.Parse("Input.cs", "/bakup");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/bakup"));
 		}
 
 		/// <summary>
 		/// Tests parsing an input file with backup and restore both specified
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputBackupRestoreTest()
 		{
-			CommandArguments.Parse("Input.cs", "/b", "/r");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/b", "/r"));
 		}
 
 		/// <summary>
@@ -86,40 +82,36 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests parsing an input file with an empty flag
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputConfigurationEmptyFlagTest()
 		{
-			CommandArguments.Parse("Input.cs", "/");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/"));
 		}
 
 		/// <summary>
 		/// Tests parsing an input file with an invalid configuration file
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputConfigurationFileEmptyTest()
 		{
-			CommandArguments.Parse("Input.cs", "/c:");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/c:"));
 		}
 
 		/// <summary>
 		/// Tests parsing an input file with an invalid configuration file
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputConfigurationFileNotSpecifiedTest()
 		{
-			CommandArguments.Parse("Input.cs", "/configuration");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/configuration"));
 		}
 
 		/// <summary>
 		/// Tests parsing an input file with an invalid configuration flag
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputConfigurationInvalidTest()
 		{
-			CommandArguments.Parse("Input.cs", "/confguration");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/confguration"));
 		}
 
 		/// <summary>
@@ -157,30 +149,27 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests parsing an input and output file with backup specified.  This is invalid.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputOutputBackupTest()
 		{
-			CommandArguments.Parse("Input.cs", "Output.cs", "/b");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "Output.cs", "/b"));
 		}
 
 		/// <summary>
 		/// Tests parsing an input and output file with an extraneous argument.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputOutputExtraneousTest()
 		{
-			CommandArguments.Parse("Input.cs", "Output.cs", "Extraneous.cs");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "Output.cs", "Extraneous.cs"));
 		}
 
 		/// <summary>
 		/// Tests parsing an input and output file with restore specified.  This is invalid.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputOutputRestoreTest()
 		{
-			CommandArguments.Parse("Input.cs", "Output.cs", "/r");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "Output.cs", "/r"));
 		}
 
 		/// <summary>
@@ -203,10 +192,9 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests parsing an input file with an invalid restore flag
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputRestoreInvalidTest()
 		{
-			CommandArguments.Parse("Input.cs", "/resore");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/resore"));
 		}
 
 		/// <summary>
@@ -259,10 +247,9 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests parsing an input file with an invalid trace flag
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseInputTraceInvalidTest()
 		{
-			CommandArguments.Parse("Input.cs", "/trce");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/trce"));
 		}
 
 		/// <summary>
@@ -317,30 +304,27 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests parsing a null string arg
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseNullArgTest()
 		{
-			CommandArguments.Parse("Input.cs", null);
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", null));
 		}
 
 		/// <summary>
 		/// Tests parsing a null string[]
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseNullArrayTest()
 		{
-			CommandArguments.Parse(null);
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse(null));
 		}
 
 		/// <summary>
 		/// Tests parsing an input file with an unknown flag
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void ParseUnknownFlagTest()
 		{
-			CommandArguments.Parse("Input.cs", "/z");
+			Assert.Throws(typeof(ArgumentException), () => CommandArguments.Parse("Input.cs", "/z"));
 		}
 
 		#endregion

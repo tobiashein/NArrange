@@ -17,7 +17,7 @@ namespace NArrange.Tests.Core
 		/// <summary>
 		/// Directory containing files for encoding testing.
 		/// </summary>
-		private const string EncodingTestFileDirectory = "EncodingTestFiles";
+		private readonly string EncodingTestFileDirectory = Path.Combine(TestContext.CurrentContext.WorkDirectory, "EncodingTestFiles");
 
 		#endregion
 

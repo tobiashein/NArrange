@@ -88,40 +88,36 @@ namespace NArrange.Tests.Core
 		/// Tests the BackupFiles method with a null backup root directory.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void BackupFilesNullBackupRootTest()
 		{
-			BackupUtilities.BackupFiles(null, "123456789", new string[] {"c:\test\test.cs"});
+			Assert.Throws(typeof(ArgumentException), () => BackupUtilities.BackupFiles(null, "123456789", new string[] {"c:\test\test.cs"}));
 		}
 
 		/// <summary>
 		/// Tests the BackupFiles method with a null key.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void BackupFilesNullKeyTest()
 		{
-			BackupUtilities.BackupFiles("c:\temp", null, new string[] {"c:\test\test.cs"});
+			Assert.Throws(typeof(ArgumentException), () => BackupUtilities.BackupFiles("c:\temp", null, new string[] {"c:\test\test.cs"}));
 		}
 
 		/// <summary>
 		/// Tests the GetFileNameKey method with an empty string.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void GetFileNameKeyEmptyTest()
 		{
-			string key = BackupUtilities.CreateFileNameKey(string.Empty);
+			Assert.Throws(typeof(ArgumentException), () => { string key = BackupUtilities.CreateFileNameKey(string.Empty); });
 		}
 
 		/// <summary>
 		/// Tests the GetFileNameKey method with null.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void GetFileNameKeyNullTest()
 		{
-			string key = BackupUtilities.CreateFileNameKey(null);
+			Assert.Throws(typeof(ArgumentNullException), () => { string key = BackupUtilities.CreateFileNameKey(null); }) ;
 		}
 
 		/// <summary>
@@ -133,7 +129,7 @@ namespace NArrange.Tests.Core
 			const string TestFileName1 = @"c:\temp\This Is Some Folder\This Is Some File.cs";
 			const string TestFileName2 = @"c:\temp\this is some folder\this is some file.cs";
 			const string TestFileName3 = @"e:\temp\this is some folder\this is some file.cs";
-			const string TestKey = "_1910131599";
+			const string TestKey = "_1132715649";
 
 			//
 			// The same key should be returned accross multiple runs.
@@ -160,20 +156,18 @@ namespace NArrange.Tests.Core
 		/// Tests the RestoreFiles method with a null backup root directory.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void RestoreFilesNullBackupRootTest()
 		{
-			BackupUtilities.RestoreFiles(null, "123456789");
+			Assert.Throws(typeof(ArgumentException), () => BackupUtilities.RestoreFiles(null, "123456789"));
 		}
 
 		/// <summary>
 		/// Tests the RestoreFiles method with a null key.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
 		public void RestoreFilesNullKeyTest()
 		{
-			BackupUtilities.RestoreFiles("c:\temp", null);
+			Assert.Throws(typeof(ArgumentException), () => BackupUtilities.RestoreFiles("c:\temp", null));
 		}
 
 		#endregion

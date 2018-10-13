@@ -555,20 +555,18 @@ namespace NArrange.Tests.ConsoleApplication
 		/// Tests Run without args
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ArgumentNullException))]
 		public void RunNullArgsTest()
 		{
-			Program.Run(new TestLogger(), null);
+			Assert.Throws(typeof(ArgumentNullException), () => Program.Run(new TestLogger(), null));
 		}
 
 		/// <summary>
 		/// Tests Run without a logger
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof(ArgumentNullException))]
 		public void RunNullLoggerTest()
 		{
-			Program.Run(null, CommandArguments.Parse("Input.cs"));
+			Assert.Throws(typeof(ArgumentNullException), () => Program.Run(null, CommandArguments.Parse("Input.cs")));
 		}
 
 		/// <summary>

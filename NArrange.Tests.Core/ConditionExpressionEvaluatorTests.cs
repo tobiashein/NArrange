@@ -58,11 +58,9 @@ namespace NArrange.Tests.Core
 		/// Tests the Evaluate method with a null expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void EvaluateElementExpressionNullTest()
 		{
-			bool result = ConditionExpressionEvaluator.Instance.Evaluate(
-				null, new FieldElement());
+			Assert.Throws(typeof(ArgumentNullException), () => { bool result = ConditionExpressionEvaluator.Instance.Evaluate(null, new FieldElement()); });
 		}
 
 		/// <summary>
@@ -175,7 +173,6 @@ namespace NArrange.Tests.Core
 		/// Tests the Evaluate method with a null element.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void EvaluateElementNullTest()
 		{
 			IConditionExpression expression = new BinaryOperatorExpression(
@@ -183,8 +180,7 @@ namespace NArrange.Tests.Core
 				new ElementAttributeExpression(ElementAttributeType.Name),
 				new StringExpression("Test"));
 
-			bool result = ConditionExpressionEvaluator.Instance.Evaluate(
-				expression, null as ICodeElement);
+			Assert.Throws(typeof(ArgumentNullException), () => { bool result = ConditionExpressionEvaluator.Instance.Evaluate(expression, null as ICodeElement); });
 		}
 
 		/// <summary>
@@ -262,11 +258,9 @@ namespace NArrange.Tests.Core
 		/// Tests the Evaluate method with a null expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void EvaluateFileExpressionNullTest()
 		{
-			bool result = ConditionExpressionEvaluator.Instance.Evaluate(
-				null, new FileInfo("Test"));
+			Assert.Throws(typeof(ArgumentNullException), () => { bool result = ConditionExpressionEvaluator.Instance.Evaluate(null, new FileInfo("Test")); });
 		}
 
 		/// <summary>
@@ -296,7 +290,6 @@ namespace NArrange.Tests.Core
 		/// Tests the Evaluate method with a null file.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void EvaluateFileNullTest()
 		{
 			IConditionExpression expression = new BinaryOperatorExpression(
@@ -304,8 +297,7 @@ namespace NArrange.Tests.Core
 				new FileAttributeExpression(FileAttributeType.Name),
 				new StringExpression("Test"));
 
-			bool result = ConditionExpressionEvaluator.Instance.Evaluate(
-				expression, null as FileInfo);
+			Assert.Throws(typeof(ArgumentNullException), () => { bool result = ConditionExpressionEvaluator.Instance.Evaluate(expression, null as FileInfo); });
 		}
 
 		/// <summary>
@@ -352,7 +344,6 @@ namespace NArrange.Tests.Core
 		/// unknown operator type.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentOutOfRangeException))]
 		public void EvaluateInvalidOperatorTest()
 		{
 			IConditionExpression expression = new BinaryOperatorExpression(
@@ -363,8 +354,7 @@ namespace NArrange.Tests.Core
 			FieldElement element = new FieldElement();
 			element.Name = "Test";
 
-			bool result = ConditionExpressionEvaluator.Instance.Evaluate(
-				expression, element);
+			Assert.Throws(typeof(ArgumentOutOfRangeException), () => { bool result = ConditionExpressionEvaluator.Instance.Evaluate(expression, element); });
 		}
 
 		/// <summary>

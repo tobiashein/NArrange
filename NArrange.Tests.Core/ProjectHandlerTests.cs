@@ -25,7 +25,7 @@ namespace NArrange.Tests.Core
 			ProjectHandler handler = new ProjectHandler(configuration);
 
 			Assert.IsNotNull(handler.ProjectParser, "Project parser was not created.");
-			Assert.IsInstanceOfType(typeof (MonoDevelopProjectParser), handler.ProjectParser);
+			Assert.IsAssignableFrom(typeof (MonoDevelopProjectParser), handler.ProjectParser);
 		}
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace NArrange.Tests.Core
 			ProjectHandler handler = new ProjectHandler(configuration);
 
 			Assert.IsNotNull(handler.ProjectParser, "Project parser was not created.");
-			Assert.IsInstanceOfType(typeof (MSBuildProjectParser), handler.ProjectParser);
+			Assert.IsAssignableFrom(typeof (MSBuildProjectParser), handler.ProjectParser);
 		}
 
 		/// <summary>
@@ -55,17 +55,16 @@ namespace NArrange.Tests.Core
 			ProjectHandler projectHandler = new ProjectHandler(configuration);
 
 			Assert.IsNotNull(projectHandler.ProjectParser, "Expected a project parser instance.");
-			Assert.IsInstanceOfType(typeof (MSBuildProjectParser), projectHandler.ProjectParser);
+			Assert.IsAssignableFrom(typeof (MSBuildProjectParser), projectHandler.ProjectParser);
 		}
 
 		/// <summary>
 		/// Tests creating with a null configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateWithNullConfigurationTest()
 		{
-			new ProjectHandler(null);
+			Assert.Throws(typeof(ArgumentNullException), () => new ProjectHandler(null));
 		}
 
 		#endregion

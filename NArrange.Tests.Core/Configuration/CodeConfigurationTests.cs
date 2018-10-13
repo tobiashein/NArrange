@@ -192,7 +192,7 @@ namespace NArrange.Tests.Core.Configuration
 		[Test]
 		public void NoEndRegionNamesTest()
 		{
-			CodeConfiguration configuration = CodeConfiguration.Load(@"TestConfigurations\NoEndRegionNames.xml");
+			CodeConfiguration configuration = CodeConfiguration.Load(Path.Combine(TestContext.CurrentContext.WorkDirectory, "TestConfigurations", "NoEndRegionNames.xml"));
 			Assert.IsNotNull(configuration);
 			Assert.IsFalse(configuration.Formatting.Regions.EndRegionNameEnabled, "Unexpected value for EndRegionNameEnabled.");
 		}
@@ -292,7 +292,7 @@ namespace NArrange.Tests.Core.Configuration
 		[Test]
 		public void SpacesTest()
 		{
-			CodeConfiguration configuration = CodeConfiguration.Load(@"TestConfigurations\SpacesConfig.xml");
+			CodeConfiguration configuration = CodeConfiguration.Load(Path.Combine(TestContext.CurrentContext.WorkDirectory, "TestConfigurations", "SpacesConfig.xml"));
 			Assert.IsNotNull(configuration);
 			Assert.AreEqual(TabStyle.Spaces, configuration.Formatting.Tabs.TabStyle, "Unexpected tab style.");
 		}

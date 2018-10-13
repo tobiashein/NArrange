@@ -30,10 +30,9 @@ namespace NArrange.Tests.Core
 		/// Test construction with a null configuration.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void CreateWithNullTest()
 		{
-			SortedInserter sortedInserter = new SortedInserter(ElementType.NotSpecified, null);
+			Assert.Throws(typeof(ArgumentNullException), () => { SortedInserter sortedInserter = new SortedInserter(ElementType.NotSpecified, null); });
 		}
 
 		/// <summary>

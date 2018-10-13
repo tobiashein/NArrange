@@ -17,11 +17,10 @@ namespace NArrange.Tests.Core
 		/// Tests the AddArranger method with a null arranger.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void AddArrangerNullTest()
 		{
 			ChainElementArranger chainArranger = new ChainElementArranger();
-			chainArranger.AddArranger(null);
+			Assert.Throws(typeof(ArgumentNullException), () => chainArranger.AddArranger(null));
 		}
 
 		/// <summary>
@@ -64,7 +63,6 @@ namespace NArrange.Tests.Core
 		/// Tests the Arrange method with an element that cannot be handled.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (InvalidOperationException))]
 		public void UnsupportedArrangeNoParentTest()
 		{
 			ChainElementArranger chain = new ChainElementArranger();
@@ -77,7 +75,7 @@ namespace NArrange.Tests.Core
 			chain.AddArranger(disabledArranger);
 			Assert.IsFalse(chain.CanArrange(fieldElement), "Unexpected return value from CanArrange.");
 
-			chain.ArrangeElement(null, fieldElement);
+			Assert.Throws(typeof(InvalidOperationException), () => chain.ArrangeElement(null, fieldElement));
 		}
 
 		/// <summary>

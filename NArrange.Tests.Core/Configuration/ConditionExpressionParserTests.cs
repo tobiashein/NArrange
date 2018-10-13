@@ -207,11 +207,10 @@ namespace NArrange.Tests.Core.Configuration
 		/// Tests parsing a null expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentException))]
+
 		public void ParseEmptyTest()
 		{
-			IConditionExpression expression = ConditionExpressionParser.Instance.Parse(
-				string.Empty);
+			Assert.Throws(typeof(ArgumentException), () => { IConditionExpression expression = ConditionExpressionParser.Instance.Parse(string.Empty); });
 		}
 
 		/// <summary>
@@ -318,241 +317,187 @@ namespace NArrange.Tests.Core.Configuration
 		/// Tests parsing an invalid attribute scope.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unknown attribute scope")]
 		public void ParseInvalidAttributeScopeTest()
 		{
 			string expression = "$(Foo.Name) : 'Test'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid attribute name.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidAttributeTest()
 		{
 			string expression = "$(Or) : 'Test'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid binary operator.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Invalid operator #")]
 		public void ParseInvalidBinaryOperatorTest1()
 		{
 			string expression = "$(File.Name) # 'Or')";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid binary operator.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Invalid operator #")]
 		public void ParseInvalidBinaryOperatorTest2()
 		{
 			string expression = "$(File.Name) : 'Or' # ($(File.Name) : 'And')";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid cased binary operator.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Invalid operator or")]
 		public void ParseInvalidCasedBinaryOperatorTest()
 		{
 			string expression = "$(File.Name) : 'Or' or $(File.Name) : 'And'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unmatched )")]
 		public void ParseInvalidExpressionExtraParenthesesTest1()
 		{
 			string expression = "($(Name) == 'Test'))";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unmatched )")]
 		public void ParseInvalidExpressionExtraParenthesesTest2()
 		{
 			string expression = "$(Name) == 'Test')";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidExpressionMissingOperatorTest()
 		{
 			string expression = "$(Name) == 'Test' $(Name) == 'Foo'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected )")]
 		public void ParseInvalidExpressionMissingParenthesesTest()
 		{
 			string expression = "($(Name) == 'Test'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Expected '")]
 		public void ParseInvalidExpressionMissingQuoteTest()
 		{
 			string expression = "$(Name) == 'Test";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidExpressionNoOperatorTest()
 		{
 			string expression = "$(Name)";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidExpressionNoTermsTest()
 		{
 			string expression = "()";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidExpressionStringTest()
 		{
 			string expression = "'Test'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidExpressionTooManyTermsTest()
 		{
 			string expression = "$(Name) == 'Test' == $(Name)";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid file attribute.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Unknown attribute")]
 		public void ParseInvalidFileAttributeScopeTest()
 		{
 			string expression = "$(File.Blah) : 'Test'";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid nested expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException))]
 		public void ParseInvalidNestedExpressionTest()
 		{
 			string expression = "$(File.Name) :  'Test' And ()";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
 		/// Tests parsing an invalid unary operator.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (FormatException),
-			MatchType = MessageMatch.Contains,
-			ExpectedMessage = "Invalid operator #")]
 		public void ParseInvalidUnaryOperatorTest()
 		{
 			string expression = "#($(File.Name) : 'Or')";
 
-			IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(
-				expression);
+			Assert.Throws(typeof(FormatException), () => { IConditionExpression conditionExpression = ConditionExpressionParser.Instance.Parse(expression); });
 		}
 
 		/// <summary>
@@ -626,11 +571,9 @@ namespace NArrange.Tests.Core.Configuration
 		/// Tests parsing a null expression.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void ParseNullTest()
 		{
-			IConditionExpression expression = ConditionExpressionParser.Instance.Parse(
-				null);
+			Assert.Throws(typeof(ArgumentNullException), () => { IConditionExpression expression = ConditionExpressionParser.Instance.Parse(null); });
 		}
 
 		/// <summary>

@@ -47,11 +47,10 @@ namespace NArrange.Tests.Core
 		/// Tests parsing a null project fileName.
 		/// </summary>
 		[Test]
-		[ExpectedException(typeof (ArgumentNullException))]
 		public void ParseNullTest()
 		{
 			MSBuildProjectParser projectParser = new MSBuildProjectParser();
-			projectParser.Parse(null);
+			Assert.Throws(typeof(ArgumentNullException), () => projectParser.Parse(null));
 		}
 
 		/// <summary>
@@ -89,7 +88,7 @@ namespace NArrange.Tests.Core
 		/// <summary>
 		/// Performs test fixture setup.
 		/// </summary>
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetup()
 		{
 			_testProjectFile = Path.GetTempFileName() + ".csproj";
@@ -100,7 +99,7 @@ namespace NArrange.Tests.Core
 		/// <summary>
 		/// Performs test fixture cleanup.
 		/// </summary>
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown()
 		{
 			try

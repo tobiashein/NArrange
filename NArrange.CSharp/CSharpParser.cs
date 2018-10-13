@@ -316,6 +316,15 @@ namespace NArrange.CSharp
 				int typeIndex = nameIndex;
 				string typeCandidate;
 
+				if (words[0].StartsWith("(") && words[words.Count - 1].EndsWith(")"))
+				{
+					var firstWord = string.Join(" ", words.OfType<string>().Take(words.Count));
+
+					words.Clear();
+					words.Insert(0, firstWord);
+					typeIndex = 1;
+				}
+
 				do
 				{
 					typeIndex--;
@@ -378,7 +387,7 @@ namespace NArrange.CSharp
 					returnType = typeCandidate;
 				}
 			}
-			else
+			else if (words.Count == 1)
 			{
 				name = words[0];
 				words.RemoveAt(0);
@@ -2428,7 +2437,7 @@ namespace NArrange.CSharp
 							GetMemberNameAndType(wordList, out memberName, out returnType);
 						}
 
-						if (hasParams)
+						if ((memberName != null || returnType != null) && hasParams)
 						{
 							if (elementType == ElementType.Delegate)
 							{
