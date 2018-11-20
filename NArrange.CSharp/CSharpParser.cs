@@ -316,7 +316,9 @@ namespace NArrange.CSharp
 				int typeIndex = nameIndex;
 				string typeCandidate;
 
-				if (words[0].StartsWith("(") && words[words.Count - 1].EndsWith(")"))
+				// HACK: Allow value tuples (named and unnamed) as either return type or generic type parameter.
+				if ((words[0].StartsWith("(", StringComparison.OrdinalIgnoreCase) && words[words.Count - 1].EndsWith(")", StringComparison.OrdinalIgnoreCase))
+					|| (words[0].Contains("<(") && words[words.Count - 1].Contains(")>")))
 				{
 					var firstWord = string.Join(" ", words.OfType<string>().Take(words.Count));
 
