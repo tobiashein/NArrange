@@ -3827,6 +3827,17 @@ namespace NArrange.Tests.CSharp
 		}
 
 		[Test]
+		public void Parse_ShouldNotThrow_ForValueTupleAsGenericTypeParameter()
+		{
+			// Arrange
+			var reader = new StringReader("public IEnumerable<(string, int)> Get() { return null; }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
+		[Test]
 		public void Parse_ShouldNotThrow_ForValueTupleAsMethodArgument()
 		{
 			// Arrange
@@ -3842,6 +3853,17 @@ namespace NArrange.Tests.CSharp
 		{
 			// Arrange
 			var reader = new StringReader("public (string s, int i) Get() { return (string.Empty, 0); }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
+		[Test]
+		public void Parse_ShouldNotThrow_ForValueTupleWithNamesAsGenericTypeParameter()
+		{
+			// Arrange
+			var reader = new StringReader("public IEnumerable<(string s, int i)> Get() { return null; }");
 			var parser = new CSharpParser();
 
 			// Act / Assert
