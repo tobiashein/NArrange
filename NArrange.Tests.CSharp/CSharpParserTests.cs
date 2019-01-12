@@ -688,7 +688,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing a class where the new() constraint is not the last 
+		/// Tests parsing a class where the new() constraint is not the last
 		/// type parameter constraint.
 		/// </summary>
 		[Test]
@@ -1332,7 +1332,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of constructor members from the 
+		/// Verifies the parsing of constructor members from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -1444,7 +1444,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of delegates from the 
+		/// Verifies the parsing of delegates from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -1576,7 +1576,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of events from the 
+		/// Verifies the parsing of events from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -1809,7 +1809,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of field members from the 
+		/// Verifies the parsing of field members from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -2345,7 +2345,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies that the correct number of members are parsed from the 
+		/// Verifies that the correct number of members are parsed from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -2532,7 +2532,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of methods from the 
+		/// Verifies the parsing of methods from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -2709,7 +2709,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing a method with a block character in a comment of the 
+		/// Tests parsing a method with a block character in a comment of the
 		/// body text.
 		/// </summary>
 		[Test]
@@ -2731,7 +2731,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing a method with a block character in a comment of the 
+		/// Tests parsing a method with a block character in a comment of the
 		/// body text.
 		/// </summary>
 		[Test]
@@ -2984,7 +2984,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing of a namepsace where a closing 
+		/// Tests parsing of a namepsace where a closing
 		/// brace is expected.";
 		/// </summary>
 		[Test]
@@ -2998,7 +2998,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing of a namepsace where an opening 
+		/// Tests parsing of a namepsace where an opening
 		/// brace is expected.";
 		/// </summary>
 		[Test]
@@ -3012,7 +3012,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of nested types from the 
+		/// Verifies the parsing of nested types from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -3237,7 +3237,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Verifies the parsing of properties members from the 
+		/// Verifies the parsing of properties members from the
 		/// sample class.
 		/// </summary>
 		[Test]
@@ -3456,7 +3456,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing unmatched nested regions that use comment directives.  
+		/// Tests parsing unmatched nested regions that use comment directives.
 		/// </summary>
 		[Test]
 		public void ParseRegionCommentDirectiveMismatchedTest()
@@ -3475,7 +3475,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing nested regions that use comment directives.  
+		/// Tests parsing nested regions that use comment directives.
 		/// </summary>
 		[Test]
 		public void ParseRegionCommentDirectiveTest()
@@ -3511,7 +3511,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests comment scenarios with region preprocessor directives. 
+		/// Tests comment scenarios with region preprocessor directives.
 		/// </summary>
 		[Test]
 		public void ParseRegionCommentsTest()
@@ -3542,7 +3542,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing nested regions.  
+		/// Tests parsing nested regions.
 		/// </summary>
 		[Test]
 		public void ParseRegionNestedTest()
@@ -3714,7 +3714,7 @@ namespace NArrange.Tests.CSharp
 		}
 
 		/// <summary>
-		/// Tests parsing a using statement where an end 
+		/// Tests parsing a using statement where an end
 		/// of statement is expected.
 		/// </summary>
 		[Test]
@@ -3875,6 +3875,17 @@ namespace NArrange.Tests.CSharp
 		{
 			// Arrange
 			var reader = new StringReader("public void Get((string s, int i) tuple) { }");
+			var parser = new CSharpParser();
+
+			// Act / Assert
+			Assert.DoesNotThrow(() => parser.Parse(reader));
+		}
+
+		[Test]
+		public void Parse_ShouldNotThrow_ForExpressionBodiedMethodWithTypeParameterConstraints()
+		{
+			// Arrange
+			var reader = new StringReader("public void Get<TEntity>(TEntity entity) where TEntity : IEntity => entity.DoStuff();");
 			var parser = new CSharpParser();
 
 			// Act / Assert

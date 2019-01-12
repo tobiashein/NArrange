@@ -36,7 +36,6 @@
 
 #endregion
 
-
 using System.Linq;
 
 namespace NArrange.CSharp
@@ -2138,7 +2137,8 @@ namespace NArrange.CSharp
 
 				while (genericElement.TypeParameters.Count > 0 &&
 					   NextChar != CSharpSymbol.BeginBlock &&
-					   NextChar != CSharpSymbol.EndOfStatement)
+					   NextChar != CSharpSymbol.EndOfStatement &&
+					   NextChar != CSharpSymbol.Assignment)
 				{
 					//
 					// Parse type parameter constraints
